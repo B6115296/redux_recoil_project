@@ -1,6 +1,7 @@
 import "./ProductScreen.css";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { Link, useHistory } from "react-router-dom";
 
 // Actions
 import { getProductDetails } from "../redux/actions/productActions";
@@ -25,6 +26,18 @@ const ProductScreen = ({ match, history }) => {
     history.push(`/cart`);
   };
 
+  const getUser = useSelector((state) => state.user);
+  const users  = getUser.user.item
+  console.log(users)
+
+useEffect(() => {
+  if(users){
+  }else if (users == ""){
+    history.push('/login')
+  }else{
+    history.push('/login')
+  }
+}, [users])
 
   return (
     <div className="productscreen">

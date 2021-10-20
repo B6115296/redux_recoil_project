@@ -1,7 +1,7 @@
 import * as actionTypes from "../constants/userConstants";
 import axios from "axios";
 
-export const addUserDetails = (email) => async (dispatch) => {
+export const addUserDetails = (email) => async (dispatch, getState) => {
 
       console.log(email)
   
@@ -9,6 +9,8 @@ export const addUserDetails = (email) => async (dispatch) => {
         type: actionTypes.ADD_TO_AUTH,
         payload: email,
       });
+
+      // localStorage.setItem('user',JSON.stringify(getState().user.userItems))
   };
 
   export const removeFromAuth = (email) => (dispatch, getState) => {

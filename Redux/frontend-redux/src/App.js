@@ -1,7 +1,7 @@
 
 import './App.css';
 import { useState } from 'react';
-import {BrowserRouter as Router, Switch, Route} from  'react-router-dom';
+import {BrowserRouter as Router, Switch, Route, useHistory} from  'react-router-dom';
 
 // Screens
 
@@ -18,24 +18,32 @@ import SideDrawer from './components/SideDrawer';
 import { Signin } from './components/Signin';
 import { Register} from './components/Register';
 
+import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+
+import { useDispatch } from "react-redux";
+
+// Actions
+import { removeFromAuth } from './redux/actions/userActions';
+
 function App() {
 
   const [sideToggle, setSideToggle] = useState(false);
+
   return (
     <Router className ="main">
-      <Navbar click={() => setSideToggle(true)}/>
+    <Navbar click={() => setSideToggle(true)}/>
       <SideDrawer show={sideToggle} click={() => setSideToggle(false)}/>
       <Backdrop show={sideToggle} click={() => setSideToggle(false)}/>
-
-      
       <main>
         <Switch>
           <Route exact path="/login" component={Signin}/>
+          <Route exact path="/register" component={Register}/>
           <Route exact path="/" component={HomeScreen}/>
           <Route exact path="/product/:id" component={ProductScreen}/>
           <Route exact path="/cart" component={CartScreen}/>
           <Route exact path="/end" component={EndScreen}/>
-          <Route exact path="/register" component={Register}/>
+          
         </Switch>
       </main>
     </Router>

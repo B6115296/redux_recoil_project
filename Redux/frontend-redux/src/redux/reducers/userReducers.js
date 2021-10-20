@@ -1,7 +1,7 @@
 import * as actionType from '../constants/userConstants'
 
 const initialState = {
-    user: [],
+    user: "",
 }
 export const userDetailsReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -9,13 +9,13 @@ export const userDetailsReducer = (state = initialState, action) => {
           const item = action.payload;
             return {
               ...state,
-              user: [...state.user, item],
+              user: {...state.user, item},
             };
           
         case actionType.REMOVE_FROM_AUTH:
           return {
-              ...state,
-              user: state.user.filter((x) => x.email !== action.payload)
+              user: ""
+              //user: state.user.filter((x) => x.email !== action.payload)
           }
         default:
           return state;

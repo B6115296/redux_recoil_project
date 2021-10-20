@@ -2,6 +2,7 @@ import './HomeScreen.css';
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
+import { Link, useHistory } from "react-router-dom";
 
 // Components
 import Product from '../components/Product';
@@ -14,6 +15,20 @@ const HomeScreen = () => {
     const getProducts = useSelector(state => state.getProducts);
     const { products, loading, error } = getProducts;
    
+    const getUser = useSelector((state) => state.user);
+    const users  = getUser.user.item
+    console.log(users)
+    let history = useHistory();
+
+  useEffect(() => {
+    if(users){
+    }else if (users == ""){
+      history.push('/login')
+    }else{
+      history.push('/login')
+    }
+  }, [users])
+
 
     useEffect(() => {
         dispatch(listProduct())

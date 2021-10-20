@@ -9,7 +9,10 @@ import { useSelector, useDispatch } from "react-redux";
 // Actions
 import { addUserDetails } from '../redux/actions/userActions';
 
+import { useAlert } from 'react-alert'
+
 export const Signin = ({ match}) => {
+  const alert = useAlert()
 
   const dispatch = useDispatch();
     
@@ -26,18 +29,35 @@ export const Signin = ({ match}) => {
     /*  currentUser: null,
     message: "", */
   });
+  
   const [getuser, setGetuser] = useState();
 
   const onChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
 
+  // const addToOrderHandler = (products, amount) => {
+  //   dispatch(addToOrder( users, products, amount, address));
+
+  //   console.log(products);
+  //   console.log(amount);
+  // };
+  const showAlert = () => {
+    alert.show('Oh look, Please fill your address เข้าใจมั้ย')
+  }
+
   const onSubmit = async(e) =>  {
     e.preventDefault();
      console.log(user);
 
-     const email = "Test2@gmail.com"
-     const password = "123456"
+    //  const email = "Test2@gmail.com"
+    //  const password = "123456"
+
+    const email = (user.email).toString()
+    const password = (user.password).toString()
+
+    console.log(email, password)
+    // console.log(emaill, passwordd)
 
      const config = {
       header: {
@@ -48,21 +68,29 @@ export const Signin = ({ match}) => {
     try {
       const { data } = await axios.post(
         "/signin/login",
-        { email , password},
+        { email, password},
         config
       )
 
       localStorage.setItem("authToken", data.token);
       console.log("Yahu")
-      dispatch(addUserDetails(email));
+      console.log(data)
+      dispatch(addUserDetails(data));
       history.push("/")
+
       
     } catch (error) {
+      
       setError(error.response.data.error);
       setTimeout(() => {
+        
         setError("");
+        
       }, 5000);
+      
     }
+
+    
       /*   .then((res) => {
         if (res.ok) {
           history.push("/home");
@@ -89,6 +117,7 @@ export const Signin = ({ match}) => {
       //   }, 3000);
       // });
   };
+  
 
   return (
     <div>
@@ -123,7 +152,7 @@ export const Signin = ({ match}) => {
 
             <div style={{ display: "flex" }}>
               <div>
-                <button className="buy-button" onClick={onSubmit}>
+                <button className="buy-button" onClick={onSubmit} >
                   Login
                 </button>
               </div>

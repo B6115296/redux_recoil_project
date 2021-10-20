@@ -1,0 +1,26 @@
+
+.TextField{
+    background-color: white;
+    color: white;
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+  }
+  input{
+    background-color: greenyellow;
+    color: greenyellow;
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+  }
+
+  .buy-button{
+    background-color: greenyellow;
+    border: none;
+    width: 100px;
+    padding: 10px;
+    margin-top: 20px;
+    margin-left: 80px;
+  }

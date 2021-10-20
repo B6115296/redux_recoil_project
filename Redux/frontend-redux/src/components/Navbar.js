@@ -33,14 +33,45 @@ const Navbar = ({click}) => {
     console.log(loginToggle)
     const dispatch = useDispatch();
 
-    const getUser = useSelector(state => state.user);
-    const { loadings, errors, users } = getUser;
+    const getUser = useSelector((state) => state.user);
+    const users  = getUser.user.item
+    console.log(users)
+
+    // if (users) {
+    //     setLoginToggle(true)
+    // }
 
     const logoutHandler = () => {
+        console.log(users)
         dispatch(removeFromAuth(users));
+        setLoginToggle(false)
       };
 
-      
+      const login = () => setLoginToggle(false)
+      const logout = () => setLoginToggle(false)
+
+      useEffect(() => {
+          if(users){
+            setLoginToggle(true)
+          }else if (users == ""){
+            setLoginToggle(false)
+          }else{
+            setLoginToggle(false)
+          }
+        
+      }, users)
+
+    
+      const Login = () => (
+        <div id="results" className="login-results" onClick={login} onClick={logoutHandler}>
+            <i class="fas fa-user" aria-hidden="true"> Logout</i>
+        </div>
+      )
+      const Logout = () => (
+        <div id="results" className="login-results" onClick={logout}  >
+            <i class="fas fa-user" aria-hidden="true"> Login</i>
+        </div>
+      )
 
 
     return (
@@ -51,29 +82,29 @@ const Navbar = ({click}) => {
 
             {/* links */}
             <ul className="navbar__links">
-                <li>
+                { loginToggle ? <li>
                     <Link to ="/cart" className="cart__link">
+                        
                         <i className="fas fa-shopping-cart"></i>
                         <span>
                             Cart
                             <span className="cartlogo__badge">{getCarttCount()}</span>
                         </span>
                     </Link>
-                </li>
+                </li> : null}
+                
                 <li>
-                    <Link to ="/">
+                    <Link to ="/"  >
                         Shop
                     </Link>
                 </li>
-                <li show={loginToggle == "true"} click={() => setLoginToggle(false)}>
-                    <Link to ="/login" >
-                        Login
-                    </Link>
-                </li>
-                <li show={loginToggle == "false"} click={() => setLoginToggle(false)}>
-                    <Link to ="/login" onClick={logoutHandler} >
-                        Logout
-                    </Link>
+                <li>
+                    
+                    
+                    <Link to ="/login">
+                        { loginToggle ? <Login /> : <Logout />}
+                    </Link> 
+                    
                 </li>
                 
             </ul>
@@ -88,3 +119,5 @@ const Navbar = ({click}) => {
 }
 
 export default Navbar
+
+
