@@ -11,14 +11,16 @@ import Button from '@mui/material/Button';
 
 // Components
 import Product from "../components/Product";
-import { getProduct as listProduct } from "../redux/actions/productActions";
+import { getOrders as addToOrder } from "../redux/actions/orderAction";
 
 const EndScreen = () => {
   const dispatch = useDispatch();
   let history = useHistory();
 
-  const getProducts = useSelector((state) => state.getProducts);
-  const { products, loading, error } = getProducts;
+  const getOrders = useSelector((state) => state.order);
+  const orders= getOrders;
+
+  console.log(orders.orderItems.item.userId);
 
   const {
     register,
@@ -27,7 +29,7 @@ const EndScreen = () => {
   } = useForm();
 
   useEffect(() => {
-    dispatch(listProduct());
+    // dispatch(addToOrder());
   }, [dispatch]);
 
   return (
@@ -37,13 +39,13 @@ const EndScreen = () => {
           <form /*onSubmit={this.onSubmit} */>
             <h2 style={{ textAlign: "center" }}>This is your slip</h2>
             <div>
-              <label>Email</label>
+              <label>Customer ID</label>
               <div>
                 <input
                   disabled
                   id="filled-disabled"
                   label="Disabled"
-                  defaultValue="Hello World"
+                  defaultValue={orders.orderItems.item.userId}
                   variant="filled"
                 />
               </div>
@@ -55,7 +57,7 @@ const EndScreen = () => {
                  disabled
                  id="filled-disabled"
                  label="Disabled"
-                 defaultValue="Hello World"
+                 defaultValue={orders.orderItems.item.address}
                  variant="filled"
                 />
               </div>
@@ -67,7 +69,7 @@ const EndScreen = () => {
                   disabled
                   id="filled-disabled"
                   label="Disabled"
-                  defaultValue="Hello World"
+                  defaultValue={orders.orderItems.item.amount}
                   variant="filled"
                 />
               </div>

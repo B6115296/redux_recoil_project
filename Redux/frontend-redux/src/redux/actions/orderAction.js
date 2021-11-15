@@ -7,6 +7,15 @@ export const addToOrder = (userId,products, amount,address) => async (dispatch, 
         userId, products ,amount,address
       },)
     console.log(data)
+    dispatch({
+      type: actionTypes.ADD_TO_ORDER,
+      payload: {
+          userId: data.userId,
+          products: data.products,
+          amount: data.amount,
+          address: data.address,
+      }
+  })
     console.log(userId,products, amount,address)
 }
 
