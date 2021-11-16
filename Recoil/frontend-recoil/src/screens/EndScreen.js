@@ -21,6 +21,7 @@ const EndScreen = () => {
   // const getProducts = useSelector((state) => state.getProducts);
   // const { products, loading, error } = getProducts;
   const [users,setUsers] = useRecoilState(userIdState)
+  const 
   const logoutHandler = () => {
     console.log(users)
     setUsers("")
@@ -40,7 +41,7 @@ const EndScreen = () => {
       <div class="loginForm">
         <div className="form-div">
           <form /*onSubmit={this.onSubmit} */>
-            <h2 style={{ textAlign: "center" }}>This is your slip</h2>
+            <h2 style={{ textAlign: "center" }}>Thank you for your purchase</h2>
             <div>
               <label>Email</label>
               <div>
