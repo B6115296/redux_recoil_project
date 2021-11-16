@@ -1,7 +1,7 @@
 import "./HomeScreen.css";
 import React from 'react'
 import { useRecoilState, useRecoilValue,useSetRecoilState } from "recoil";
-import { listP } from "../recoil/selector";
+import { listP,bomb } from "../recoil/selector";
 // Components
 import Product from "../components/Product";
 import { useState, useEffect } from "react";
@@ -10,10 +10,9 @@ import { Link, useHistory } from "react-router-dom";
 
 const HomeScreen = () => {
 
-    const [x,setX] = useRecoilState(productListState)
-    setX(2)
+  // const [x,setX] = useRecoilState(productListState)
+  // setX(2)
 
-    // console.log(x)
     const list = useRecoilValue(listP)
     const products = list.data
     console.log(products)

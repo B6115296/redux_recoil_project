@@ -5,20 +5,22 @@ import axios from "axios";
 
 // Components
 import CartItem from "../components/CartItem";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue,useSetRecoilState } from "recoil";
 import { cartState } from "../recoil/atom";
 
 import { RemoveFromCart } from "../recoil/cartState";
-import { AddToCart,DetailsCartState  } from "../recoil/cartState";
+import { AddToCart  } from "../recoil/cartState";
 
-import { productListState, userIdState } from "../recoil/atom";
+import { userIdState, orderState } from "../recoil/atom";
 import { Link, useHistory } from "react-router-dom";
 
+import alert from 'alert'
+
 const CartScreen = () => {
-  const stateDetail = DetailsCartState()
-  // console.log(stateDetail)
+
   const addProduct = AddToCart()
   const cartItems = useRecoilValue(cartState);
+  
   console.log(cartItems)
 
   const qtyChangeHandler = (id, qty) => {
@@ -36,18 +38,31 @@ const CartScreen = () => {
       .toFixed(2);
   };
 
-  const [username, setUsername] = useState("");
+  const showAlert = () => {
+    alert('Oh look, Please fill your address เข้าใจมั้ย')
+  }
+
+  const username = useRecoilValue(userIdState)
+  const [order, setOrders] = useRecoilState(orderState)
   const [address, setAddress] = useState("");
+  const [errors, setError] = useState(false);
+  const [styleErrorAddress, setStyleErrorAddress] = useState();
 
   const addToOrderHandler = (userId, products, amount, address) =>{
+
     // dispatch(addToOrder(username, products, amount, address));
-  const { data } = axios.post(`api/orders/`, {
-    userId, products ,amount,address
-    },)
-  
-    console.log(data)
-    console.log(userId, products ,amount,address);
-    // console.log(amount);
+    if(address != ""){
+      const { data } = axios.post(`api/orders/`, {
+        userId, products ,amount,address
+        },)
+        console.log(data)
+        console.log(userId, products ,amount,address);
+        setOrders([userId, products ,amount,address])
+      history.push('/end')
+    }else{
+      // myFunction()
+    }
+    console.log(order);
   };
   console.log(username,address)
   
@@ -94,18 +109,6 @@ const CartScreen = () => {
         </div>
         <div className="cartscreen__info">
           <div className="form-group">
-            <label htmlFor="username">Username: </label>
-            <input
-              className="form-input"
-              type="username"
-              required
-              id="username"
-              placeholder="Username "
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
-          </div>
-          <div className="form-group">
             <label htmlFor="address">Address: </label>
             <input
               className="form-input"
@@ -116,12 +119,24 @@ const CartScreen = () => {
               value={address}
               onChange={(e) => setAddress(e.target.value)}
             />
+            <span
+            style={{
+              color: "red",
+              display: "inline-block",
+              textAlign: "left",
+              float: "right",
+              fontSize: "14px",
+            }}
+          >
+            {address ? null : "Address is required"}
+          </span>
           </div>
         </div>
         <div>
         <button
             onClick={() =>
               addToOrderHandler(username, cartItems, getCartSubTotal(), address)
+              
             }
           >
             Proceed To Checkout

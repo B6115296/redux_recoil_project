@@ -32,7 +32,7 @@ export const orderState = atom({
   key: 'orderState',
   default: [],
   effects_UNSTABLE: [
-    localStorageEffect('order_State')
+    localStorageEffect('product_liststate')
 ],
 })
 

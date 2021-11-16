@@ -11,17 +11,17 @@ import { Link, useHistory } from "react-router-dom";
 
 // Components
 import Product from "../components/Product";
-import { productListState, userIdState } from "../recoil/atom";
+import { productListState, userIdState,orderState } from "../recoil/atom";
 import { useRecoilState, useRecoilValue,useSetRecoilState } from "recoil";
 
 const EndScreen = () => {
 
   let history = useHistory();
 
-  // const getProducts = useSelector((state) => state.getProducts);
-  // const { products, loading, error } = getProducts;
   const [users,setUsers] = useRecoilState(userIdState)
-  const 
+  const [orders,setOrders] = useRecoilState(orderState)
+  console.log(users)
+  console.log(orders[0])
   const logoutHandler = () => {
     console.log(users)
     setUsers("")
@@ -32,24 +32,30 @@ const EndScreen = () => {
     handleSubmit,
   } = useForm();
 
-  // useEffect(() => {
-  //   dispatch(listProduct());
-  // }, [dispatch]);
+
+  useEffect(() => {
+    if(users){
+    }else if (users == ""){
+      history.push('/login')
+    }else{
+      history.push('/login')
+    }
+  }, [users])
 
   return (
     <div>
       <div class="loginForm">
         <div className="form-div">
           <form /*onSubmit={this.onSubmit} */>
-            <h2 style={{ textAlign: "center" }}>Thank you for your purchase</h2>
+            <h2 style={{ textAlign: "center" }}>This is your slip</h2>
             <div>
-              <label>Email</label>
+              <label>USER ID</label>
               <div>
                 <input
                   disabled
                   id="filled-disabled"
                   label="Disabled"
-                  defaultValue="Hello World"
+                  defaultValue={orders[0]}
                   variant="filled"
                 />
               </div>
@@ -61,7 +67,7 @@ const EndScreen = () => {
                  disabled
                  id="filled-disabled"
                  label="Disabled"
-                 defaultValue="Hello World"
+                 defaultValue={orders[3]}
                  variant="filled"
                 />
               </div>
@@ -73,7 +79,7 @@ const EndScreen = () => {
                   disabled
                   id="filled-disabled"
                   label="Disabled"
-                  defaultValue="Hello World"
+                  defaultValue={orders[2]}
                   variant="filled"
                 />
               </div>
